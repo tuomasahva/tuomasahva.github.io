@@ -1,0 +1,28 @@
+html {
+	height: 100%;
+}
+
+body {
+	background-color: #000;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+}
+
+.CodeMirror {
+	height: calc(100% - 32px);
+}
+
+audio {
+	position: absolute;
+	left: calc(75% - 150px);
+	bottom: 10px;
+}
+
+button {
+	padding: 6px 10px;
+	border: 0px;
+	opacity: 0.5;
+}

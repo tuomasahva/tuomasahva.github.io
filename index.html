@@ -1,1 +1,164 @@
-Hello World
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Tuomas Ahva</title>
+	</head>
+	<body>
+
+		<link rel="stylesheet" href="js/libs/codemirror/codemirror.css">
+		<link rel="stylesheet" href="js/libs/codemirror/theme/monokai.css">
+		<script src="js/libs/codemirror/codemirror.js"></script>
+		<script src="js/libs/codemirror/mode/glsl.js"></script>
+
+		<script src="js/libs/three.js"></script>
+		<script src="js/libs/TrackballControls.js"></script>
+
+		<script src="js/libs/GPGPU.js"></script>
+		<script src="js/libs/gpgpu/CopyShader.js"></script>
+
+		<link rel="stylesheet" href="css/main.css">
+		<script src="js/Audio.js"></script>
+		<script src="js/Editor.js"></script>
+		<script src="js/RenderFragment.js"></script>
+
+		<script id="vs-render" type="x-shader">
+			void main() {
+
+				gl_Position = vec4( position, 1.0 );
+
+			}
+		</script>
+
+		<script id="fs-render" type="x-shader">
+			uniform sampler2D tFFT;
+			uniform float time;
+			uniform vec2 resolution;
+
+			void main( void ) {
+
+				vec2 position = ( gl_FragCoord.xy / resolution.xy );
+
+				// float r = texture2D( tFFT, vec2( position.y ) ).r;
+
+				gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
+
+			}
+		</script>
+
+		<script>
+
+			if ( location.search === '?reset' ) {
+
+				if ( confirm( 'Any unsaved data will be lost. Are you sure?' ) ) {
+
+					localStorage.removeItem( 'glsl-fragment' )
+
+				}
+
+			}
+
+			if ( localStorage.getItem( 'glsl-fragment' ) === null ) {
+
+				var shaders = [ {
+
+					vertex: document.getElementById( 'vs-render' ).textContent.trim(),
+					fragment: document.getElementById( 'fs-render' ).textContent.trim()
+
+				} ];
+
+			} else {
+
+				var shaders = JSON.parse( localStorage.getItem( 'glsl-fragment' ) );
+
+			}
+
+			//
+
+			// var editor = new Editor( 'Render', shaders[ 0 ].fragment );
+			// editor.dom.style.top = '0';
+			// editor.dom.style.left = '0';
+			// editor.dom.style.width = '50%';
+			// editor.dom.style.height = '100%';
+			// editor.onChange( function ( string ) {
+
+			// 	shaders[ 0 ].fragment = string;
+			// 	render.setRenderShader( shaders[ 0 ] );
+
+			// 	save();
+
+			// } );
+			// document.body.appendChild( editor.dom );
+
+			function save() {
+
+				localStorage.setItem( 'glsl-fragment', JSON.stringify( shaders ) );
+
+			}
+
+			var render = new RenderFragment();
+			render.dom.style.top = '0';
+			render.dom.style.left = '0';
+			render.dom.style.width = '100%';
+			render.dom.style.height = '100%';
+			render.setRenderShader( shaders[ 0 ] );
+			document.body.appendChild( render.dom );
+
+			render.resize();
+
+			var exportButton = document.createElement( 'button' );
+			exportButton.style.position = 'absolute';
+			exportButton.style.top = '10px';
+			exportButton.style.right = '10px';
+			exportButton.textContent = 'EXPORT';
+			exportButton.addEventListener( 'click', function ( event ) {
+
+				var output = JSON.stringify( shaders, null, '\t' );
+
+				var blob = new Blob( [ output ], { type: 'text/plain' } );
+				var objectURL = URL.createObjectURL( blob );
+
+				window.open( objectURL, '_blank' );
+
+			} );
+			document.body.appendChild( exportButton );
+
+			var text = document.createElement( 'h1' );
+			text.style.position = 'absolute';
+			text.style.top = '50%';
+			text.style.left = '50%';
+			text.textContent = "This is cool";
+
+			document.body.appendChild( text );
+
+			var audio = new Audio();
+
+			window.addEventListener( 'resize', function ( event ) {
+
+				render.resize();
+
+			}, false );
+
+			//
+
+			function animate() {
+
+				audio.update();
+
+				render.render();
+				requestAnimationFrame( animate );
+
+			}
+
+			function init() {
+
+				audio.init();
+				render.setAudioTexture( audio.getSpectrumTexture() )
+				animate();
+
+			}
+
+			window.addEventListener( 'load', init );
+
+		</script>
+	</body>
+</html>
