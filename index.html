@@ -1,164 +1,145 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<!DOCTYPE HTML>
+<html>
 	<head>
-		<title>Tuomas Ahva</title>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<title>Padworks</title>
 	</head>
+
 	<body>
+		<div class="banner">
+			<h1 class="banner-header">PADWORKS</h1>
+		</div>
 
-		<link rel="stylesheet" href="js/libs/codemirror/codemirror.css">
-		<link rel="stylesheet" href="js/libs/codemirror/theme/monokai.css">
-		<script src="js/libs/codemirror/codemirror.js"></script>
-		<script src="js/libs/codemirror/mode/glsl.js"></script>
+		<div class="intro-text">
+			<p>Padworks is MA thesis project by Tuomas Ahva. It explores the possibilities of iPad as musical instrument. Padworks consists of written text and studio live performances of four compositions. All compositions are performed with an iPad. In addition this site contains a list of apps used in the project.</p>
+		</div>
 
-		<script src="js/libs/three.js"></script>
-		<script src="js/libs/TrackballControls.js"></script>
+		<div class="thesis-text">
+			<h2>Master's thesis</h2>
+			<p class="thesis-text">The entire thesis as an online version can be found <a href="thesis_plain">here</a>. PDF version can be found <a href="thesis_plain/images/0 - TuomasAhvaMAThesis_final_2016-04-04.pdf">here</a>.</p>
+			<p class="thesis-text">
+				<a href="thesis_plain">
+					<img class="link-image" src="thesis_plain/images/thesis-cover.png">
+				</a>
+			</p>
+		</div>
 
-		<script src="js/libs/GPGPU.js"></script>
-		<script src="js/libs/gpgpu/CopyShader.js"></script>
+		<div class="videos">
+			<h2>Videos</h2>
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/cQlNx5tcKsM?list=PLcQATYbFTR4Q8SK__-tE9hbdpz0lywspt" frameborder="0" allowfullscreen></iframe>
+		</div>
 
-		<link rel="stylesheet" href="css/main.css">
-		<script src="js/Audio.js"></script>
-		<script src="js/Editor.js"></script>
-		<script src="js/RenderFragment.js"></script>
+		<div class="apps">
+			<h2>Apps used in the compositions</h2>
 
-		<script id="vs-render" type="x-shader">
-			void main() {
+			<div class="composition">
+				<h3 class="composition">Clorochime</h3>
+				<div class="instruments">
+					<h4>Instruments</h4>
+					<div class="app">Color Chime</div>
+					<div class="app">Tachyon</div>
+					<div class="app">Bebot</div>
+					<div class="app">Impaktor</div>
+				</div>
+				<div class="controllers">
+					<h4>Controller apps</h4>
+					<div class="app">Audiobus Remote</div>
+				</div>
+				<div class="sync">
+					<h4>Sync and connection apps</h4>
+					<div class="app">Audiobus</div>
+					<div class="app">MiMix</div>
+				</div>
+				<div class="effects"></div>
+					<h4>Effects</h4>
+					<div class="app">Crystalline</div>
+					<div class="app">Caramel</div>
+					<div class="app">Johnny</div>
+					<div class="app">AUFX:Space</div>
+				<div class="daw">
+					<h4>DAWs and loopers</h4>
+					<div class="app">Loopy HD</div>
+				</div>
+			</div>
 
-				gl_Position = vec4( position, 1.0 );
+			<div class="composition">
+				<h3 class="composition">Parkfun</h3>
+				<div class="instruments">
+					<h4>Instruments</h4>
+					<div class="app">Samplr</div>
+					<div class="app">Geo Synth</div>
+				</div>
+				<div class="controllers">
+					<h4>Controller apps</h4>
+					<div class="app">Audiobus Remote</div>
+				</div>
+				<div class="sync">
+					<h4>Sync and connection apps</h4>
+					<div class="app">Audiobus</div>
+				</div>
+				<div class="effects">
+					<h4>Effects</h4>
+					<div class="app">n/a</div>
+				</div>
+				<div class="daw">
+					<h4>DAWs and loopers</h4>
+					<div class="app">Loopy HD</div>
+				</div>
+			</div>
 
-			}
-		</script>
+			<div class="composition">
+				<h3 class="composition">Shenanigans Love</h3>
+				<div class="instruments">
+					<h4>Instruments</h4>
+					<div class="app">Animoog</div>
+					<div class="app">Bassline</div>
+					<div class="app">Thumbjam</div>
+				</div>
+				<div class="controllers">
+					<h4>Controller apps</h4>
+					<div class="app">GuitarCapo+</div>
+				</div>
+				<div class="sync">
+					<h4>Sync and connection apps</h4>
+					<div class="app">AudioShare</div>
+				</div>
+				<div class="effects">
+					<h4>Effects</h4>
+					<div class="app">Jam Synth</div>
+					<div class="app">Caramel</div>
+				</div>
 
-		<script id="fs-render" type="x-shader">
-			uniform sampler2D tFFT;
-			uniform float time;
-			uniform vec2 resolution;
+				<div class="daw">
+					<h4>DAWs and loopers</h4>
+					<div class="app">n/a</div>
+				</div>
+			</div>
 
-			void main( void ) {
-
-				vec2 position = ( gl_FragCoord.xy / resolution.xy );
-
-				// float r = texture2D( tFFT, vec2( position.y ) ).r;
-
-				gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
-
-			}
-		</script>
-
-		<script>
-
-			if ( location.search === '?reset' ) {
-
-				if ( confirm( 'Any unsaved data will be lost. Are you sure?' ) ) {
-
-					localStorage.removeItem( 'glsl-fragment' )
-
-				}
-
-			}
-
-			if ( localStorage.getItem( 'glsl-fragment' ) === null ) {
-
-				var shaders = [ {
-
-					vertex: document.getElementById( 'vs-render' ).textContent.trim(),
-					fragment: document.getElementById( 'fs-render' ).textContent.trim()
-
-				} ];
-
-			} else {
-
-				var shaders = JSON.parse( localStorage.getItem( 'glsl-fragment' ) );
-
-			}
-
-			//
-
-			// var editor = new Editor( 'Render', shaders[ 0 ].fragment );
-			// editor.dom.style.top = '0';
-			// editor.dom.style.left = '0';
-			// editor.dom.style.width = '50%';
-			// editor.dom.style.height = '100%';
-			// editor.onChange( function ( string ) {
-
-			// 	shaders[ 0 ].fragment = string;
-			// 	render.setRenderShader( shaders[ 0 ] );
-
-			// 	save();
-
-			// } );
-			// document.body.appendChild( editor.dom );
-
-			function save() {
-
-				localStorage.setItem( 'glsl-fragment', JSON.stringify( shaders ) );
-
-			}
-
-			var render = new RenderFragment();
-			render.dom.style.top = '0';
-			render.dom.style.left = '0';
-			render.dom.style.width = '100%';
-			render.dom.style.height = '100%';
-			render.setRenderShader( shaders[ 0 ] );
-			document.body.appendChild( render.dom );
-
-			render.resize();
-
-			var exportButton = document.createElement( 'button' );
-			exportButton.style.position = 'absolute';
-			exportButton.style.top = '10px';
-			exportButton.style.right = '10px';
-			exportButton.textContent = 'EXPORT';
-			exportButton.addEventListener( 'click', function ( event ) {
-
-				var output = JSON.stringify( shaders, null, '\t' );
-
-				var blob = new Blob( [ output ], { type: 'text/plain' } );
-				var objectURL = URL.createObjectURL( blob );
-
-				window.open( objectURL, '_blank' );
-
-			} );
-			document.body.appendChild( exportButton );
-
-			var text = document.createElement( 'h1' );
-			text.style.position = 'absolute';
-			text.style.top = '50%';
-			text.style.left = '50%';
-			text.textContent = "This is cool";
-
-			document.body.appendChild( text );
-
-			var audio = new Audio();
-
-			window.addEventListener( 'resize', function ( event ) {
-
-				render.resize();
-
-			}, false );
-
-			//
-
-			function animate() {
-
-				audio.update();
-
-				render.render();
-				requestAnimationFrame( animate );
-
-			}
-
-			function init() {
-
-				audio.init();
-				render.setAudioTexture( audio.getSpectrumTexture() )
-				animate();
-
-			}
-
-			window.addEventListener( 'load', init );
-
-		</script>
+			<div class="composition">
+				<h3 class="composition">Luaka Bebop</h3>
+				<div class="instruments">
+					<h4>Instruments</h4>
+					<div class="app">AirVox</div>
+					<div class="app">ThumbJam</div>
+				</div>
+				<div class="controllers">
+					<h4>Controller apps</h4>
+					<div class="app">Elastic Drums</div>
+				</div>
+				<div class="sync">
+					<h4>Sync and connection apps</h4>
+					<div class="app">n/a</div>
+				</div>
+				<div class="effects">
+					<h4>Effects</h4>
+					<div class="app">n/a</div>
+				</div>
+				<div class="daw">
+					<h4>DAWs and loopers</h4>
+					<div class="app">n/a</div>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

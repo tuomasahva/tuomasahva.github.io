@@ -1,0 +1,114 @@
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+  /* adds animation for all transitions */
+
+  -webkit-transition: .25s ease-in-out;
+  -moz-transition: .25s ease-in-out;
+  -o-transition: .25s ease-in-out;
+  transition: .25s ease-in-out;
+  margin: auto;
+  padding: 0;
+  -webkit-text-size-adjust: none;
+}
+/* Makes sure that everything is 100% height */
+
+html,
+body {
+  height: 100%;
+  /*overflow: hidden;*/
+   max-width: 800px;
+   text-align: center;
+}
+
+@font-face {
+    font-family: bebas;
+    src: url('fonts/BebasNeueBook.otf');
+}
+
+@font-face {
+  font-family: ashbury;
+  src: url('fonts/AshburyLig.otf');
+}
+
+@font-face {
+  font-family: rubik;
+  src: url('fonts/Rubik-Black.ttf');
+}
+
+img {
+  text-align: center;
+  margin:auto;
+}
+
+p {
+  margin-top: 1em;
+  font-family: ashbury;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-word-break: normal;
+  // Non standard for webkit
+  word-break: normal;
+  padding: 20px;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: bebas;
+  padding-top: 1em;
+  padding-bottom: 0.5em;
+}
+
+.composition {
+  font-family: ashbury;
+}
+
+.side-navigation {
+  font-family: bebas;
+  list-style-type: none;
+}
+
+.navigation-link {
+  padding-bottom: 1em;
+}
+
+.side-image {
+  max-width: 200px;
+}
+
+.research-question {
+  padding-left: 25px;
+}
+
+.intro-text {
+  font-family: ashbury;
+  text-align: right;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.banner {
+  background-color: #E3999B;
+}
+
+.banner-header {
+  text-align: center;
+  font-family: rubik;
+}
+
+.intro-text {
+}
+
+.link-image {
+  max-height: 200px;
+}
+
+.thesis-text {
+  text-align: center;
+  margin: auto;
+}
